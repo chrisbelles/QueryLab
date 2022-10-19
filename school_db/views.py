@@ -1,4 +1,5 @@
 from hashlib import new
+from unicodedata import name
 from django.shortcuts import render
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
@@ -150,12 +151,13 @@ SELECT `school_db_instructor`.`id`,
 # (Do not hard code his name in the print)
 def problem_three(request):
 
-    instructor = Instructor.objects.filter(pk = 2)
-    courses = Course.objects.filter(instructor__first_name__= "Colin Robinson")
-
-    for instructor in instructor:
-      print(f"Instructor Name: {instructor.first_name} {instructor.last_name}")
-      print(f"Course: {courses.name}")
+    # instructors = Instructor.objects.get(pk = 2)
+    courses = Course.objects.all().get(instructor)
+    for course in courses:
+      print(courses.instructor)
+    # for course in courses:
+    #   print(f"Instructor Name: {instructors.first_name} {instructors.last_name}")
+    #   print(f"Courses: {courses.name}")
 
     return complete(request)
 
